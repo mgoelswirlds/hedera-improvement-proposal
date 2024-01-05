@@ -1,11 +1,11 @@
 ---
 hip:
-title: NFT Allowances
+title: NFT Allowances REST API
 author: Mugdha Goel <mugdha.goel@swirldslabs.com>
 working-group: Steven Sheehy (@steven-sheehy),
 type: Standards Track
-category: Core
-needs-council-approval: No
+category: Mirror
+needs-council-approval: Yes
 status: Draft
 last-call-date-time:
 created: 2023-12-07
@@ -25,7 +25,7 @@ NFT marketplaces have requested the ability to view a NFT allowance's details vi
 ## Rationale
 There have been requests to enable querying spending approvals for NFTs based on the owner ID. Additionally, there is a request to be able to query by the spender ID as well. It was also asked for the ability to know whether the approval was given via `approveForAll` or not.
 
-The API described below has been chosen to make the implementation easier for NFT explorers and marketplaces that wish to search NFT allowances based on the owner and spender.The decision to design one API for both use cases is aimed at reducing the number of APIs that essentially perform similar tasks. This API would also return the `approveForAll` information.
+The API described below has been chosen to make the implementation easier for NFT explorers and marketplaces that wish to search NFT allowances based on the owner and spender. The decision to design one API for both use cases is aimed at reducing the number of APIs that essentially perform similar tasks. This API would also return the `approveForAll` information.
 
 ## User stories
 
@@ -109,7 +109,7 @@ Pagination is important to implement because there are accounts that could have 
 **Ordering**
 
 The order is governed by a combination of the spender ID and the token ID values, with the spender ID being the parent column. The token ID value governs its order within the given spender ID.
-**Note**: The default order for this API is currently ASC
+The default order for this API is currently ascending.
 
 **Filtering**
 
@@ -123,20 +123,20 @@ The table below defines the restrictions and support for the endpoint.
 |  | ne | N |  |  |
 |  | lt(e) | Y | Single occurrence only. | ?spender.id=lte:X |
 |  | gt(e) | Y | Single occurrence only. | ?spender.id=gte:X |
-| token.id | eq | Y | Single occurrence only. Requires the presence of a account.id query parameter| ?token.id=lt:Y |
+| token.id | eq | Y | Single occurrence only. Requires the presence of an `account.id` query parameter| ?token.id=lt:Y |
 |  | ne | N |  |  |
-|  | lt(e) | Y | Single occurrence only. Requires the presence of an lte or eq account.id query parameter| ?spender.id=lte:X&token.id=lt:Y |
-|  | gt(e) | Y | Single occurrence only. Requires the presence of an gte or eq account.id query parameter| ?spender.id=gte:X&token.id=gt:Y |
+|  | lt(e) | Y | Single occurrence only. Requires the presence of a `lte` or `eq` `account.id` query parameter| ?spender.id=lte:X&token.id=lt:Y |
+|  | gt(e) | Y | Single occurrence only. Requires the presence of a `gte` or `eq` `account.id` query parameter| ?spender.id=gte:X&token.id=gt:Y |
 
 Both filters must be a single occurrence of **gt(e)** or **lt(e)** which provide a lower and or upper boundary for search.
 
 ## Backwards Compatibility
 
-This HIP primarily adds new information that mirror node operators and other record stream consumers can simply ignore if they do not need it. However, NFT marketplaces using the Hedera mirror node could start using the /allowances/nfts API.
+This HIP primarily adds new information that mirror node operators and other record stream consumers can simply ignore if they do not need it. However, NFT marketplaces using the Hedera mirror node could start using the new API.
 
 ## Security Implications
 
-There are no security implications for this HIP. It simply provides a much more convenient, aggregated view of information that is already publicly available.
+There are no security implications for this HIP.
 
 ## How to Teach This
 
@@ -148,9 +148,9 @@ Please follow [this issue](https://github.com/hashgraph/hedera-mirror-node/issue
 
 ## Rejected Ideas
 
-- We briefly considered adding serial number level information for NFT allowances in order for an NFT marketplace to view which spender has approved_for_all for particular serial numbers.However, this idea was rejected due to the potential security threat it posed. When a token has a very high number of serials and allowances, implementing this feature could potentially bring the mirror node down.
-- There was a consideration to add `approveForAll` to `/api/v1/tokens/{id}/nfts/{id}`. This idea was rejected because it is possible to have an unbounded number of `approveForAll` ****allowances and it is not feasible to get it in a single response payload.
-- There was a consideration to add `approveForAll` to `/api/v1/accounts/{id}/tokens`. This idea was rejected because it is possible to have an unbounded number of `approveForAll` ****allowances and it is not feasible to get it in a single response payload.
+- We briefly considered adding serial number level information to `/api/v1/accounts/{id}/allowances/nft` in order for an NFT marketplace to view which spender has `approvedForAll` for particular serial numbers. However, this idea was rejected due to the unbounded nature of the data. When a token has a very high number of serials and allowances, implementing this feature could become a performance concern.
+- There was a consideration to add `approve_for_all` to `/api/v1/tokens/{id}/nfts/{id}`. This idea was rejected because it is possible to have an unbounded number of `approve_for_all` allowances and it is not feasible to return this data in a single response payload.
+- There was a consideration to add `approve_for_all` to `/api/v1/accounts/{id}/tokens`. This idea was rejected because it is possible to have an unbounded number of `approve_for_all` allowances and it is not feasible to return this data in a single response payload.
 
 ## Open Issues
 
