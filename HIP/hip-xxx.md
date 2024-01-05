@@ -2,7 +2,7 @@
 hip:
 title: NFT Allowances REST API
 author: Mugdha Goel <mugdha.goel@swirldslabs.com>
-working-group: Steven Sheehy (@steven-sheehy),
+working-group: Steven Sheehy (@steven-sheehy),Ashe Oro (@Ashe-Oro)
 type: Standards Track
 category: Mirror
 needs-council-approval: Yes
@@ -50,7 +50,7 @@ When designing the NFT allowances APIs, it is important to consider certain cons
 
 ### Approved for all NFT Allowances API
 
-This API takes a path parameter that represents either the owner or spender, depending on a boolean flag provided as a query parameter called `owner`. If the `owner` value is true, the `accountId` path parameter should indicate the ID of the owner. Conversely, if the `owner` value is false, the `accountId` path parameter should indicate the ID of the spender who has an allowance.
+This API accepts a path parameter that represents either the owner or spender, depending on a boolean flag provided as a query parameter called `owner`. When the `owner` value is true, the `accountId` path parameter should specify the ID of the owner, and the API will retrieve the allowances that the owner has granted to different spenders. Conversely, when the `owner` value is false, the `accountId` path parameter should indicate the ID of the spender who has an allowance, and the API will instead provide the allowances granted to the spender by different owners of those tokens.
 
 Following is an example response of the NFT allowance API:
 
@@ -59,6 +59,15 @@ GET `/api/v1/accounts/{accountId}/allowances/nfts`
 ```json
 {
   "allowances": [
+    {
+      "approved_for_all": true,
+      "owner": "0.0.1000",
+      "spender": "0.0.9857",
+      "token_id": "0.0.1032",
+      "timestamp": {
+        "from": "1633466229.96874612",
+        "to": null
+     },
     {
       "approved_for_all": true,
       "owner": "0.0.1000",
@@ -78,20 +87,11 @@ GET `/api/v1/accounts/{accountId}/allowances/nfts`
         "from": "1633466229.96874612",
         "to": null
       }
-    },
-    {
-      "approved_for_all": true,
-      "owner": "0.0.1000",
-      "spender": "0.0.9857",
-      "token_id": "0.0.1032",
-      "timestamp": {
-        "from": "1633466229.96874612",
-        "to": null
-      }
+    }
     }
   ],
   "links": {
-		"next": "/api/v1/accounts/0.0.1000/allowances/nfts?limit=2&order=desc&token.id=gte:0.0.1034&account.id=gt:9857"
+		"next": "/api/v1/accounts/0.0.1000/allowances/nfts?limit=3&order=asc&account.id=gte:9857&token.id=gt:0.0.1034"
 	}
 }
 ```
@@ -144,7 +144,7 @@ The Hedera documentation and the OpenAPI specification will be updated to add th
 
 ## Reference Implementation
 
-Please follow [this issue](https://github.com/hashgraph/hedera-mirror-node/issues/3245) for progress on the reference implementation.
+Please follow [this issue](https://github.com/hashgraph/hedera-mirror-node/issues/7480) for progress on the reference implementation.
 
 ## Rejected Ideas
 
@@ -158,8 +158,8 @@ No known open issues exist.
 
 ## References
 
-[HIP ticket](https://github.com/hashgraph/hedera-mirror-node/issues/7143)
-[HIP 336](https://hips.hedera.com/hip/hip-336)
+[Epic](https://github.com/hashgraph/hedera-mirror-node/issues/7480)      
+[HIP 336](https://hips.hedera.com/hip/hip-336)          
 [Design](https://github.com/hashgraph/hedera-mirror-node/blob/main/docs/design/allowances.md)
 
 ## Copyright/license
