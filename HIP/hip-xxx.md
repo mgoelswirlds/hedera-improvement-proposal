@@ -62,16 +62,6 @@ GET `/api/v1/accounts/1000/allowances/nfts?owner=true`
     {
       "approved_for_all": true,
       "owner": "0.0.1000",
-      "spender": "0.0.9857",
-      "token_id": "0.0.1032",
-      "timestamp": {
-        "from": "1633466229.96884615",
-        "to": null
-      }
-    },
-    {
-      "approved_for_all": true,
-      "owner": "0.0.1000",
       "spender": "0.0.8488",
       "token_id": "0.0.1033",
       "timestamp": {
@@ -86,6 +76,16 @@ GET `/api/v1/accounts/1000/allowances/nfts?owner=true`
       "token_id": "0.0.1034",
       "timestamp": {
         "from": "1633466229.96874618",
+        "to": null
+      }
+    },
+    {
+      "approved_for_all": true,
+      "owner": "0.0.1000",
+      "spender": "0.0.9857",
+      "token_id": "0.0.1032",
+      "timestamp": {
+        "from": "1633466229.96884615",
         "to": null
       }
     }
