@@ -161,14 +161,14 @@ The table below defines the restrictions and support for the endpoint.
 
 | Query Param | Comparison Operator | Support | Description | Example |
 | --- | --- | --- | --- | --- |
-| account.id | eq | Y | Single occurrence only. | ?spender.id=X |
+| account.id | eq | Y | Single occurrence only. | ?account.id=X |
 |  | ne | N |  |  |
-|  | lt(e) | Y | Single occurrence only. | ?spender.id=lte:X |
-|  | gt(e) | Y | Single occurrence only. | ?spender.id=gte:X |
+|  | lt(e) | Y | Single occurrence only. | ?account.id=lte:X |
+|  | gt(e) | Y | Single occurrence only. | ?account.id=gte:X |
 | token.id | eq | Y | Single occurrence only. Requires the presence of an `account.id` query parameter| ?token.id=lt:Y |
 |  | ne | N |  |  |
-|  | lt(e) | Y | Single occurrence only. Requires the presence of a `lte` or `eq` `account.id` query parameter| ?spender.id=lte:X&token.id=lt:Y |
-|  | gt(e) | Y | Single occurrence only. Requires the presence of a `gte` or `eq` `account.id` query parameter| ?spender.id=gte:X&token.id=gt:Y |
+|  | lt(e) | Y | Single occurrence only. Requires the presence of a `lte` or `eq` `account.id` query parameter| ?account.id=lte:X&token.id=lt:Y |
+|  | gt(e) | Y | Single occurrence only. Requires the presence of a `gte` or `eq` `account.id` query parameter| ?account.id=gte:X&token.id=gt:Y |
 
 Both filters must be a single occurrence of **gt(e)** or **lt(e)** which provide a lower and or upper boundary for search.
 
