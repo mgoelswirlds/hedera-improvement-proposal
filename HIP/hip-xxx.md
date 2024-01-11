@@ -172,6 +172,33 @@ The table below defines the restrictions and support for the endpoint.
 
 Both filters must be a single occurrence of **gt(e)** or **lt(e)** which provide a lower and or upper boundary for search.
 
+### Serial level allowance information
+
+To retrieve NFT serial number level allowance information with a `tokenId`, you can use an existing API.
+
+GET`api/v1/tokens/{tokenId}/listNfts`
+
+```json
+{
+  "nfts": [
+    {
+      "account_id": "0.0.123",
+      "created_timestamp": "1704827664.003435784",
+      "delegating_spender": null,
+      "deleted": false,
+      "metadata": "AA==",
+      "modified_timestamp": "1704827664.003435784",
+      "serial_number": 1,
+      "spender": null,
+      "token_id": "0.0.1000"
+    }
+  ],
+  "links": {
+    "next": null
+  }
+}
+```
+
 ## Backwards Compatibility
 
 This HIP primarily adds new information that mirror node operators and other record stream consumers can simply ignore if they do not need it. However, NFT marketplaces using the Hedera mirror node could start using the new API.
